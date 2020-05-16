@@ -1,0 +1,41 @@
+#!/usr/bin/python
+
+import socket
+import struct
+from arpreq import arpreq
+from sys import argv
+import subprocess as shell
+
+# action to perform on valid WOL packet
+action = "echo I'm a WOL packet!"
+# ip to use in deriving mac address
+test_ip = "192.168.1.1"
+
+if len(argv) > 1:
+    action = ''.join(argv[1:])
+
+# Derive our active mac address by performing an internal connection attempt
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# Must be internal or we go via the openvpn tun0
+s.connect((test_ip, 1))
+ip_address = s.getsockname()[0]
+s.close()
+# Get mac address from our default inet ip, strip out colons
+mac_address = arpreq(ip_address).replace(':', '')
+
+while True:
+    # creating a rawSocket for communications
+    # PF_SOCKET (packet interface), SOCK_RAW (Raw socket) - htons (protocol) 0x0842 = Wake On LAN protocol
+    rawSocket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(0x0842))
+
+    # read first packet in stream from recvfrom method, [0] to extract from tuple,
+    # [14:] to ditch eth header, we already know we are a 0x0842 packet because of socket
+    packet = rawSocket.recvfrom(2048)[0][14:]
+
+    # Magic packet should always be 102 bytes long
+    if len(packet) == 102:
+        # Unpack packet, should only be our data now
+        data = struct.unpack("!102s", packet)
+        # Check the magic packet conforms to the expected format
+        if data[0] == bytes.fromhex('ff' * 6 + mac_address * 16):
+            shell.call(action.split())
