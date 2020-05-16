@@ -22,6 +22,9 @@ chmod 755 *_actioner
 or
 ./eth_actioner [command]
 ```
+
+The command will then be executed when a magic-packet is detected.
+
 ## udp_actioner
 udp_actioner will monitor the network for udp port 9 with valid magic packet data
 
