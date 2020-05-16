@@ -1,6 +1,8 @@
 # Action-on-LAN
 Suite of tools that use low level sockets to listen for magic packets and perform an action when detected.
 
+For example this set of tools makes it possible to turn a computer both off and on with a wake-on-lan packet.
+
 ## How to run
 python3 needs to be installed, along with the following module:
 - arpreq
