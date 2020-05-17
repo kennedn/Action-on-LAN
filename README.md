@@ -37,6 +37,10 @@ eth_actioner will monitor the network for wake-on-LAN ethernet frames (0x0842).
 
 This type of packet is sent by ethtool on linux.
 
+# unified_actioner
+
+Does checking for both types of wake-on-LAN packets.
+
 ## systemd
 
 Included is an Example.service that can be installed on linux systems running systemd under ```/etc/systemd/system/``` you would then enable and start the service:
