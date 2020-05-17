@@ -1,0 +1,74 @@
+#!/usr/bin/python
+
+import socket
+import struct
+from arpreq import arpreq
+from sys import argv
+import subprocess as shell
+
+# action to perform on valid WOL packet
+action = "echo I'm a WOL packet!"
+# ip to use in deriving mac address
+test_ip = "192.168.1.1"
+# port to look on for magic packets
+port = 9
+
+if len(argv) > 1:
+    action = ' '.join(argv[1:])
+
+
+# Derive our active mac address by performing an internal connection attempt
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# Must be internal or we go via the openvpn tun0
+s.connect((test_ip, 1))
+ip_address = s.getsockname()[0]
+s.close()
+# Get mac address from our default inet ip, strip out colons
+mac_address = arpreq(ip_address).replace(':', '')
+
+while True:
+    # creating a rawSocket for communications
+    # PF_SOCKET (packet interface), SOCK_RAW (Raw socket) - htons (protocol) 0x0003 = All data with eth header
+    rawSocket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(0x0003))
+
+    # read first packet in stream from recvfrom method, [0] to extract from tuple
+    packet = rawSocket.recvfrom(2048)[0]
+
+    eth_header = struct.unpack("!6s6s2s", packet[:14])  # dest_mac | source_mac | type
+    # Remove eth header as we are done with it
+    packet = packet[14:]
+
+    # Data is processed the same no matter the packet type,
+    # So set true if we are a WOL packet UDP or ETH
+    valid_packet = False
+    # If we are an eth frame, all that is left is the data to process.
+    if eth_header[2] == b'\x08\x42':
+        valid_packet = True
+    # If we are a normal ip packet, we need to do some more checks and processing
+    elif eth_header[2] == b'\x08\x00':
+        # Header consists of:
+        # version/header_length | type | total_length |
+        # identifier | flags/frag_offset | time_to_live |
+        # protocol | header_checksum | source_address, dest_address
+        ip_header = struct.unpack("!ccHHHccH4s4s", packet[:20])
+
+        # Remove ip header as we are done with it
+        packet = packet[20:]
+
+        # check if the packet protocol is UDP (0x11)
+        if ip_header[6] == b'\x11':
+            # Unpack the header portion of the UDP packet
+            udp_header = struct.unpack("!HHHH", packet[:8])  # source_port | dest_port | length | checksum
+            # Remove udp header as we are done with it
+            packet = packet[8:]
+
+            # if dest_port is 9 and size equals our expected packet size (102) + udp_header size
+            if udp_header[1] == port and udp_header[2] == 102 + 8:
+                valid_packet = True
+
+    if valid_packet:
+        # Unpack data portion of the packet
+        data = struct.unpack("!102s", packet)
+        # Check the magic packet conforms to the expected format
+        if data[0] == bytes.fromhex('ff' * 6 + mac_address * 16):
+            shell.call(action.split())
