@@ -54,3 +54,6 @@ If the mac address auto detection is not working for you, you could hard code a 
 
 Python is cross platform and this could possibly work on windows...
 
+## thanks
+
+Big thanks to davidlares for the [gist](https://gist.github.com/davidlares/e841c0f9d9b31f3cd8859575d061c467#file-rawsniffer-py) that got me started on this project
