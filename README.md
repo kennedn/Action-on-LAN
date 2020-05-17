@@ -37,7 +37,7 @@ eth_actioner will monitor the network for wake-on-LAN ethernet frames (0x0842).
 
 This type of packet is sent by ethtool on linux.
 
-# unified_actioner
+## unified_actioner
 
 Does checking for both types of wake-on-LAN packets.
 
