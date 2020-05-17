@@ -31,13 +31,9 @@ while True:
     # PF_SOCKET (packet interface), SOCK_RAW (Raw socket) - htons (protocol) 0x08000 = IP Protocol
     rawSocket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(0x0800))
 
-    # read first packet in stream from recvfrom method, [0] to extract from tuple
-    packet = rawSocket.recvfrom(2048)[0]
-
-    eth_header = struct.unpack("!6s6s2s", packet[:14])  # dest_mac | source_mac | type
-
-    # Remove ethernet header as we are done with it
-    packet = packet[14:]
+    # read first packet in stream from recvfrom method, [0] to extract from tuple, discard eth header
+    # as we wont be needing it [14:]
+    packet = rawSocket.recvfrom(2048)[0][14:]
 
     # Header consists of:
     # version/header_length | type | total_length |
