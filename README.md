@@ -13,7 +13,6 @@ sudo apt install python3
 ```
 Once the dependancies have been met the programs can be run as follows:
 ```bash
-chmod 755 *_actioner
 python3 udp_actioner [command]
 or
 python3 eth_actioner [command]
