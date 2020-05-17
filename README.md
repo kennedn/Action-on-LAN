@@ -4,16 +4,12 @@ Suite of tools that use low level sockets to listen for magic packets and perfor
 For example this set of tools makes it possible to issue a `shutdown now` command on recieving a magic packet, allowing the same mechanism to both turn on and off a device.
 
 ## How to run
-python3 needs to be installed, along with the following module:
-- arpreq
+Only python3 needs to be installed
 
 This can be achieve in debain linux variants by doing:
 
 ```bash
 sudo apt install python3.7
-```
-```bash
-python3.7 -m pip install arpreq
 ```
 Once the dependancies have been met the programs can be run as follows:
 ```bash
@@ -21,6 +17,8 @@ chmod 755 *_actioner
 ./udp_actioner [command]
 or
 ./eth_actioner [command]
+or
+./unified_actioner [command]
 ```
 
 The command will then be executed when a magic-packet is detected.
@@ -54,9 +52,9 @@ This would allow the monitor to run in the background, autostarting at boot time
 
 ## notes
 
-If the mac address auto detection is not working for you, you could hard code a mac address before the ```While True:``` loop in either of the actioners. 
+If the mac address auto detection is not working for you, you could hard code a mac address at the top of the file in any of the actioners. 
 
-Python is cross platform and this could possibly work on windows...
+Python is cross platform but at least parts of this tool won't work in windows (e.g mac detection).
 
 ## thanks
 
