@@ -1,7 +1,7 @@
 # Action-on-LAN
 Suite of tools that use low level sockets to listen for magic packets and perform an action when detected.
 
-For example this set of tools makes it possible to issue a "shutdown now" command on recieving a magic packet, allowing the same mechanism to both turn on and off a device.
+For example this set of tools makes it possible to issue a `shutdown now` command on recieving a magic packet, allowing the same mechanism to both turn on and off a device.
 
 ## How to run
 python3 needs to be installed, along with the following module:
