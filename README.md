@@ -17,7 +17,7 @@ python3 udp_actioner [command]
 or
 python3 eth_actioner [command]
 or
-python 3unified_actioner [command]
+python3 unified_actioner [command]
 ```
 
 The command will then be executed when a magic-packet is detected.
