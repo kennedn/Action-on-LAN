@@ -49,8 +49,9 @@ while True:
     # If we are an eth frame, all that is left is the data to process.
     if eth_header[2] == b'\x08\x42':
         valid_packet = True
-    # If we are a normal ip packet, we need to do some more checks and processing
-    elif eth_header[2] == b'\x08\x00':
+    # If instead we are a broadcast ipv4 packet, we need to do some more checks and processing
+    # Before we can be certain this is a WOL packet
+    elif eth_header[0] == b'\xff' * 6 and eth_header[2] == b'\x08\x00':
         # Header consists of:
         # version/header_length | type | total_length |
         # identifier | flags/frag_offset | time_to_live |
