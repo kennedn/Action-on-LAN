@@ -31,19 +31,19 @@ if mac_address is None:
 
 mac_address = mac_address.replace(':', '')
 
-while True:
-    # creating a rawSocket for communications
-    # PF_SOCKET (packet interface), SOCK_RAW (Raw socket) - htons (protocol) 0x0842 = Wake On LAN protocol
-    rawSocket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(0x0842))
+# creating a rawSocket for communications
+# PF_SOCKET (packet interface), SOCK_RAW (Raw socket) - htons (protocol) 0x0842 = Wake On LAN protocol
+with socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(0x0842)) as rawSocket:
+  while True:
 
-    # read first packet in stream from recvfrom method, [0] to extract from tuple,
-    # [14:] to ditch eth header, we already know we are a 0x0842 packet because of socket
-    packet = rawSocket.recvfrom(2048)[0][14:]
+      # read first packet in stream from recvfrom method, [0] to extract from tuple,
+      # [14:] to ditch eth header, we already know we are a 0x0842 packet because of socket
+      packet = rawSocket.recvfrom(2048)[0][14:]
 
-    # Magic packet should always be 102 bytes long
-    if len(packet) == 102:
-        # Unpack packet, should only be our data now
-        data = struct.unpack("!102s", packet)
-        # Check the magic packet conforms to the expected format
-        if data[0] == bytes.fromhex('ff' * 6 + mac_address * 16):
-            shell.call(action.split())
+      # Magic packet should always be 102 bytes long
+      if len(packet) == 102:
+          # Unpack packet, should only be our data now
+          data = struct.unpack("!102s", packet)
+          # Check the magic packet conforms to the expected format
+          if data[0] == bytes.fromhex('ff' * 6 + mac_address * 16):
+              shell.call(action.split())
