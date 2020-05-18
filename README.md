@@ -13,14 +13,14 @@ sudo apt install python3
 ```
 Once the dependancies have been met the programs can be run as follows:
 ```bash
-python3 udp_actioner [command]
+sudo python3 udp_actioner [command]
 or
-python3 eth_actioner [command]
+sudo python3 eth_actioner [command]
 or
-python3 unified_actioner [command]
+sudo python3 unified_actioner [command]
 ```
 
-The command will then be executed when a magic-packet is detected.
+The command will then be executed when a magic-packet is detected. sudo is required to work with raw sockets.
 
 ## udp_actioner
 udp_actioner will monitor the network for udp port 9 with valid magic packet data
