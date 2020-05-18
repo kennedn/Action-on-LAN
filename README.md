@@ -9,16 +9,15 @@ Only python3 needs to be installed
 This can be achieve in debain linux variants by doing:
 
 ```bash
-sudo apt install python3.7
+sudo apt install python3
 ```
 Once the dependancies have been met the programs can be run as follows:
 ```bash
-chmod 755 *_actioner
-./udp_actioner [command]
+python3 udp_actioner [command]
 or
-./eth_actioner [command]
+python3 eth_actioner [command]
 or
-./unified_actioner [command]
+python3 unified_actioner [command]
 ```
 
 The command will then be executed when a magic-packet is detected.
