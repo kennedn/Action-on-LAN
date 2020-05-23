@@ -1,7 +1,9 @@
 # Action-on-LAN
-Suite of tools that use low level sockets to listen for magic packets and perform an action when detected.
+Run of the mill Wake-on-LAN is a technology that lets network cards power on devices when they recieve a specifically crafted packet (a magic packet).
 
-For example this set of tools makes it possible to issue a `shutdown now` command on recieving a magic packet, allowing the same mechanism to both turn on and off a device.
+This repo is a suite of tools that utilises raw sockets to listen for these magic packets whilst powered on and perform a user defined command when detected.
+
+For example this set of tools makes it possible to issue a `shutdown now` command on recieving a magic packet, meaning the magic packet now becomes a toggle for turning the host both on and off.
 
 ## How to run
 Only python3 needs to be installed
