@@ -3,7 +3,7 @@ Run of the mill Wake-on-LAN is a technology that lets network cards power on dev
 
 This repo is a suite of tools that utilises raw sockets to listen for these magic packets whilst powered on and perform a user defined command when detected.
 
-For example this set of tools makes it possible to issue a `shutdown now` command on recieving a magic packet, meaning the magic packet now becomes a toggle for turning the host both on and off.
+For example this set of tools makes it possible to issue a `shutdown now` command on recieving a magic packet. This means (assuming Wake-On-LAN is enabled) a given magic packet can now toggle the power state of the host.
 
 ## How to run
 Only python3 needs to be installed
