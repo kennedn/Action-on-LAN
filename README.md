@@ -41,7 +41,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable magic-actioner
 sudo systemctl start magic-actioner
 
-You can then monitor the service by issuing:
+# You can then monitor the service by issuing:
 sudo journalctl -fu magic-actioner
 ```
 This would allow the monitor to run in the background, autostarting at boot time.
