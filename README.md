@@ -35,9 +35,14 @@ magic_actioner.py tries to deduce your active mac address.
 Included is an Example.service that can be installed on linux systems running systemd under ```/etc/systemd/system/``` you would then enable and start the service:
 
 ```bash
+# Change the ExecStart= line to point to the scripts location and exec desired command, then:
+cp Example.service /etc/systemd/system/magic-actioner.service
 sudo systemctl daemon-reload
-sudo systemctl enable Example.service
-sudo systemctl start Example.service
+sudo systemctl enable magic-actioner
+sudo systemctl start magic-actioner
+
+You can then monitor the service by issuing:
+sudo journalctl -fu magic-actioner
 ```
 This would allow the monitor to run in the background, autostarting at boot time.
 
