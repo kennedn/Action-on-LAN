@@ -1,10 +1,10 @@
 [Unit]
-Description=Monitors for 0x0800 UDP magic packets, shutdown on recieve
+Description=monitoring for magic packets
 After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/home/kennedn/scripts/udp_actioner
+ExecStart=/path/to/magic_actioner.py [command]
 Restart=always
 RestartSec=3
 
