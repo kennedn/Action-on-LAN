@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import socket
 import struct
@@ -29,7 +29,7 @@ if mac_address is None:
         print("Couldn't detect mac address!")
         exit(1)
 
-mac_address = mac_address.replace(':', '')
+mac_address = mac_address.replace(':', '').rstrip()
 
 # creating a rawSocket for communications
 # PF_SOCKET (packet interface), SOCK_RAW (Raw socket) - htons (protocol) 0x0003 = All data with eth header
