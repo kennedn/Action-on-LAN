@@ -27,6 +27,7 @@ magic_actioner.py will monitor the network for magic packets, both UDP (on confi
 `port = 9` can be overwritten in the source code if you are using a non-standard port. 
 
 magic_actioner.py tries to deduce your active mac address. 
+
 `mac_address = None` can be overwritten in the source code to hard code a desired value if auto detection is not working.
 
 ## systemd
