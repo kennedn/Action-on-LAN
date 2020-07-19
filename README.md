@@ -24,11 +24,10 @@ The command will then be executed when a magic-packet is detected. sudo is requi
 ## Functionality
 magic_actioner.py will monitor the network for magic packets, both UDP (on configured port) and WOL ethernet frames (0x0842)
 
-The `port=` variable can be overwritten in the source code if you are using a non-standard port. 
+`port = 9` can be overwritten in the source code if you are using a non-standard port. 
 
-## unified_actioner
-
-Does checking for both types of wake-on-LAN packets.
+magic_actioner.py tries to deduce your active mac address. 
+`mac_address = None` can be overwritten in the source code to hard code a desired value if auto detection is not working.
 
 ## systemd
 
@@ -43,7 +42,6 @@ This would allow the monitor to run in the background, autostarting at boot time
 
 ## notes
 
-magic_actioner.py tries to deduce your active mac address. If the mac address auto detection is not working for you, you can edit the source code to hard code `mac_address=` to a desired value. 
 
 Python *is* cross platform but at least parts of this tool won't work in windows (e.g mac detection).
 
