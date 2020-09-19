@@ -1,5 +1,5 @@
 # Action-on-LAN
-Run of the mill Wake-on-LAN is a technology that lets network cards power on devices when they recieve a specifically crafted packet (a magic packet).
+Run of the mill Wake-on-LAN is a technology that lets network cards power on devices when they receive a specifically crafted packet (a magic packet).
 
 This repo contains a script that utilises raw sockets to listen for these magic packets whilst powered on and performs a user defined command when detected.
 
