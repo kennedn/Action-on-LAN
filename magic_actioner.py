@@ -7,7 +7,6 @@ import argparse
 
 # Defaults (can be overridden via CLI)
 DEFAULT_ACTION = "echo I'm a WOL packet!"
-DEFAULT_MAC = "2c:f0:5d:56:40:43"
 DEFAULT_WOL_PORT = 9
 DEFAULT_HEALTH_PORT = 10
 
@@ -17,7 +16,7 @@ def parse_args():
     )
     parser.add_argument(
         "-m", "--mac",
-        default=DEFAULT_MAC,
+        required=True,
         help='MAC address to match, in the form "00:11:22:33:44:55".'
     )
     parser.add_argument(
@@ -60,12 +59,10 @@ def main():
         print("No MAC address specified, exiting...")
         exit(1)
 
+    print(f"Using MAC: {mac_address}, UDP port: {port}, Health port: {health_port}")
     mac_address = mac_address.replace(':', '').rstrip()
     mac_bytes = bytes.fromhex(mac_address)  # <--- bytes form for comparison
-    print(f"Using MAC: {mac_address}")
-    print(f"WOL UDP port: {port}")
-    print(f"Health UDP port: {health_port}")
-    print(f"Action on WOL: {action}")
+    print(f"Action to perform: {action}")
 
     # creating a rawSocket for communications
     # PF_PACKET (packet interface), SOCK_RAW (Raw socket) - htons (protocol) 0x0003 = All data with eth header
